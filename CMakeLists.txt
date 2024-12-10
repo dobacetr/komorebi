@@ -81,23 +81,23 @@ add_executable(komorebi-wallpaper-creator ${WALLPAPER_CREATOR})
 target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
 target_link_libraries(komorebi-wallpaper-creator ${DEPS_LIBRARIES} -lm)
 
-install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
-install(TARGETS komorebi-wallpaper-creator RUNTIME DESTINATION /System/Applications/)
+install(TARGETS komorebi RUNTIME DESTINATION $ENV{HOME}/Komorebi/System/Applications/)
+install(TARGETS komorebi-wallpaper-creator RUNTIME DESTINATION $ENV{HOME}/Komorebi/System/Applications/)
 
 
 ######### Wallpapers ############
-install(DIRECTORY data/Wallpapers/ DESTINATION /System/Resources/Komorebi)
+install(DIRECTORY data/Wallpapers/ DESTINATION $ENV{HOME}/Komorebi/System/Resources/Komorebi)
 
 
 ######### Fonts ############
-install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
+#install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
 
 ######### Icons ############
-install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)
+install(DIRECTORY data/Icons/ DESTINATION $ENV{HOME}/Komorebi/System/Resources/Komorebi)
 
 ######### Other ############
-install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
-install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
+#install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
+#install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
 
 ######### Run the upgrade script #########
 install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst.sh)")
