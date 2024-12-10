@@ -11,7 +11,14 @@ set (ARCHIVE_NAME komorebi-${VERSION})
 
 
 find_package(PkgConfig)
-pkg_check_modules(DEPS REQUIRED gtk+-3.0 glib-2.0>=2.38 gee-0.8 webkit2gtk-4.0 clutter-gtk-1.0 clutter-1.0 clutter-gst-3.0)
+pkg_check_modules(DEPS REQUIRED
+        gtk+-3.0
+        glib-2.0>=2.38
+        gee-0.8
+        webkit2gtk-4.1
+        clutter-gtk-1.0
+        clutter-1.0
+        clutter-gst-3.0)
 add_definitions(${DEPS_CFLAGS})
 
 link_directories(${DEPS_LIBRARY_DIRS})
@@ -49,7 +56,7 @@ PACKAGES
     gee-0.8
     clutter-gtk-1.0
     clutter-gst-3.0
-    webkit2gtk-4.0
+    webkit2gtk-4.1
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
    	--disable-warnings
@@ -68,7 +75,7 @@ PACKAGES
     gee-0.8
     gtk+-3.0
     gstreamer-1.0
-    webkit2gtk-4.0
+    webkit2gtk-4.1
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/
     --disable-warnings
@@ -81,23 +88,23 @@ add_executable(komorebi-wallpaper-creator ${WALLPAPER_CREATOR})
 target_link_libraries(komorebi ${DEPS_LIBRARIES} -lm)
 target_link_libraries(komorebi-wallpaper-creator ${DEPS_LIBRARIES} -lm)
 
-install(TARGETS komorebi RUNTIME DESTINATION /System/Applications/)
-install(TARGETS komorebi-wallpaper-creator RUNTIME DESTINATION /System/Applications/)
+install(TARGETS komorebi RUNTIME DESTINATION $ENV{HOME}/Komorebi/System/Applications/)
+install(TARGETS komorebi-wallpaper-creator RUNTIME DESTINATION $ENV{HOME}/Komorebi/System/Applications/)
 
 
 ######### Wallpapers ############
-install(DIRECTORY data/Wallpapers/ DESTINATION /System/Resources/Komorebi)
+install(DIRECTORY data/Wallpapers/ DESTINATION $ENV{HOME}/Komorebi/System/Resources/Komorebi)
 
 
 ######### Fonts ############
-install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
+#install(DIRECTORY data/Fonts/ DESTINATION /usr/share/fonts)
 
 ######### Icons ############
-install(DIRECTORY data/Icons/ DESTINATION /System/Resources/Komorebi)
+install(DIRECTORY data/Icons/ DESTINATION $ENV{HOME}/Komorebi/System/Resources/Komorebi)
 
 ######### Other ############
-install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
-install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
+#install(FILES data/Other/komorebi.desktop DESTINATION /usr/share/applications/)
+#install(FILES data/Other/wallpapercreator.desktop DESTINATION /usr/share/applications/)
 
 ######### Run the upgrade script #########
 install(CODE "execute_process(COMMAND ${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst.sh)")
@@ -116,7 +123,7 @@ set(CPACK_PACKAGE_VERSION_PATCH 0)
 set(CPACK_PACKAGE_INSTALL_DIRECTORY "Komorebi")
 set(CPACK_DEBIAN_PACKAGE_CONTROL_EXTRA "${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postinst;${CMAKE_CURRENT_SOURCE_DIR}/data/Other/postrm;")
 
-set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0, libwebkit2gtk-4.0-37")
+set(CPACK_DEBIAN_PACKAGE_DEPENDS "libgtk-3-0 (>= 3.14), libglib2.0-0 (>= 2.38), libgee-0.8-2, libclutter-gtk-1.0-0, libclutter-1.0-0, libclutter-gst-3.0-0, libwebkit2gtk-4.1-46")
 set(CPACK_DEBIAN_PACKAGE_ARCHITECTURE "amd64")
 set(CPACK_DEBIAN_PACKAGE_SECTION "system")
 
