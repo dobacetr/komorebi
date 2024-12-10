@@ -21,7 +21,7 @@ namespace WallpaperCreator.OnScreen {
 
     public class FinalPage : Box {
 
-        Image logo = new Image.from_file("/System/Resources/Komorebi/done.svg");
+        Image logo = new Image.from_file(@"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/done.svg");
 
         Label titleLabel = new Label("");
         Label descLabel = new Label("");
@@ -46,9 +46,11 @@ namespace WallpaperCreator.OnScreen {
 
             titleLabel.set_markup("<span font='Lato 20'>Done</span>");
 
-            var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) /System/Resources/Komorebi";
+            //var mv_command = @"sudo mv $(Environment.get_home_dir())/$(wallpaperName.replace(" ", "_").replace(".", "_").down()) $(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi";
+            var wallpaperDirPath = @"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/$(wallpaperName.replace(" ", "_").replace(".", "_").down())";
 
-            descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
+            //descLabel.set_markup(@"<span font='Lato Light 12'>Open 'Terminal' then paste the following:\n<b>$mv_command</b>\nOnce done, you can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
+            descLabel.set_markup(@"<span font='Lato Light 12'>Wallpaper is created at:\n<b>$wallpaperDirPath</b>\nYou can change the wallpaper in <i>'Change Wallpaper'</i>.</span>");
 
             closeButton.margin_top = 20;
             closeButton.halign = Align.CENTER;
@@ -75,7 +77,7 @@ namespace WallpaperCreator.OnScreen {
             // Create a new directory
             wallpaperName = wallpaperName.replace(" ", "_").replace(".", "_").down();
 
-            var dirPath = @"$(Environment.get_home_dir())/$(wallpaperName)";
+            var dirPath = @"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/$(wallpaperName)";
             File.new_for_path(dirPath).make_directory_with_parents();
             var configPath = dirPath + "/config";
             var configFile = File.new_for_path(configPath);

@@ -122,7 +122,7 @@ namespace Komorebi.OnScreen {
             });
 
     		// Add widgets
-            closeButton.add(new Image.from_file("/System/Resources/Komorebi/close_btn.svg"));
+            closeButton.add(new Image.from_file(@"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/close_btn.svg"));
     		headerBar.pack_start(closeButton, false, false);
 
     		topBox.add(titleLabel);
