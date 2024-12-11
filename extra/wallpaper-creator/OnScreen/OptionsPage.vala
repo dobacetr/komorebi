@@ -15,101 +15,98 @@
 //  along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //
 
-using Gtk;
-using Gdk;
-
 namespace WallpaperCreator.OnScreen {
 
-    public class OptionsPage : Box {
+    public class OptionsPage : Gtk.Box {
 
         // Contains the wallpaper image with buttons
-        Gtk.Box wallpaperBox = new Box(Orientation.VERTICAL, 10);
-        Overlay overlay = new Overlay();
-        Image wallpaperImage = new Image();
-        Box dateTimeBox = new Box(Orientation.VERTICAL, 5);
-        Label timeLabel = new Label("");
-        Label dateLabel = new Label("");
-        Image assetImage = new Image();
+        Gtk.Box wallpaperBox = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
+        Gtk.Overlay overlay = new Gtk.Overlay();
+        Gtk.Image wallpaperImage = new Gtk.Image();
+        Gtk.Box dateTimeBox = new Gtk.Box(Gtk.Orientation.VERTICAL, 5);
+        Gtk.Label timeLabel = new Gtk.Label("");
+        Gtk.Label dateLabel = new Gtk.Label("");
+        Gtk.Image assetImage = new Gtk.Image();
 
         // List of long options
-        ScrolledWindow scrolledWindow = new ScrolledWindow(null, null);
-        Box optionsBox = new Box(Orientation.VERTICAL, 10);
+        Gtk.ScrolledWindow scrolledWindow = new Gtk.ScrolledWindow(null, null);
+        Gtk.Box optionsBox = new Gtk.Box(Gtk.Orientation.VERTICAL, 10);
 
-        Label wallpaperTitleLabel = new Label("");
+        Gtk.Label wallpaperTitleLabel = new Gtk.Label("");
 
-        ComboBoxText wallpaperParallaxComboBox = new ComboBoxText();
+        Gtk.ComboBoxText wallpaperParallaxComboBox = new Gtk.ComboBoxText();
 
-        Label dateTimeTitleLabel = new Label("") {margin_top = 15};
+        Gtk.Label dateTimeTitleLabel = new Gtk.Label("") {margin_top = 15};
 
-        ComboBoxText dateTimeVisibleComboBox = new ComboBoxText();
+        Gtk.ComboBoxText dateTimeVisibleComboBox = new Gtk.ComboBoxText();
 
-        ComboBoxText dateTimeParallaxComboBox = new ComboBoxText();
+        Gtk.ComboBoxText dateTimeParallaxComboBox = new Gtk.ComboBoxText();
 
-        Label dateTimeMarginsLabel = new Label("Margins:");
-        Grid dateTimeMarginsGrid = new Grid();
-        SpinButton  dateTimeMarginLeftEntry = new SpinButton.with_range(0,2000, 5);
-        SpinButton dateTimeMarginRightEntry = new SpinButton.with_range(0,2000, 5);
-        SpinButton dateTimeMarginTopEntry = new SpinButton.with_range(0,2000, 5);
-        SpinButton dateTimeMarginBottomEntry = new SpinButton.with_range(0,2000, 5);
+        Gtk.Label dateTimeMarginsLabel = new Gtk.Label("Margins:");
+        Gtk.Grid dateTimeMarginsGrid = new Gtk.Grid();
+        Gtk.SpinButton  dateTimeMarginLeftEntry = new Gtk.SpinButton.with_range(0,2000, 5);
+        Gtk.SpinButton dateTimeMarginRightEntry = new Gtk.SpinButton.with_range(0,2000, 5);
+        Gtk.SpinButton dateTimeMarginTopEntry = new Gtk.SpinButton.with_range(0,2000, 5);
+        Gtk.SpinButton dateTimeMarginBottomEntry = new Gtk.SpinButton.with_range(0,2000, 5);
 
-        Label dateTimePositionLabel = new Label("Position:");
-        ComboBoxText dateTimePositionComboBox = new ComboBoxText();
+        Gtk.Label dateTimePositionLabel = new Gtk.Label("Position:");
+        Gtk.ComboBoxText dateTimePositionComboBox = new Gtk.ComboBoxText();
 
-        Label dateTimeAlignmentLabel = new Label("Alignment:");
-        ComboBoxText dateTimeAlignmentComboBox = new ComboBoxText();
+        Gtk.Label dateTimeAlignmentLabel = new Gtk.Label("Alignment:");
+        Gtk.ComboBoxText dateTimeAlignmentComboBox = new Gtk.ComboBoxText();
 
-        ComboBoxText dateTimeAlwaysOnTopComboBox = new ComboBoxText();
+        Gtk.ComboBoxText dateTimeAlwaysOnTopComboBox = new Gtk.ComboBoxText();
 
-        Label dateTimeColorLabel = new Label("Color and Alpha:");
-        Box dateTimeColorBox = new Box(Orientation.HORIZONTAL, 10);
-        ColorButton dateTimeColorButton = new ColorButton.with_rgba({222, 222, 222, 255});
-        SpinButton dateTimeAlphaEntry = new SpinButton.with_range(0, 255, 1) { value = 255 };
+        Gtk.Label dateTimeColorLabel = new Gtk.Label("Color and Alpha:");
+        Gtk.Box dateTimeColorBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
+        Gtk.ColorButton dateTimeColorButton = new Gtk.ColorButton.with_rgba({222, 222, 222, 255});
+        Gtk.SpinButton dateTimeAlphaEntry = new Gtk.SpinButton.with_range(0, 255, 1) { value = 255 };
 
-        Label dateTimeShadowColorLabel = new Label("Shadow Color and Alpha:");
-        Box dateTimeShadowColorBox = new Box(Orientation.HORIZONTAL, 10);
-        ColorButton dateTimeShadowColorButton = new ColorButton.with_rgba({222, 222, 222, 255});    
-        SpinButton dateTimeShadowAlphaEntry = new SpinButton.with_range(0, 255, 1) { value = 255 };
+        Gtk.Label dateTimeShadowColorLabel = new Gtk.Label("Shadow Color and Alpha:");
+        Gtk.Box dateTimeShadowColorBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
+        Gtk.ColorButton dateTimeShadowColorButton = new Gtk.ColorButton.with_rgba({222, 222, 222, 255});    
+        Gtk.SpinButton dateTimeShadowAlphaEntry = new Gtk.SpinButton.with_range(0, 255, 1) { value = 255 };
 
-        Label timeFontLabel = new Label("Time Font:");
-        FontButton timeFontButton = new FontButton.with_font("Lato Light 30") { use_font = true };
+        Gtk.Label timeFontLabel = new Gtk.Label("Time Font:");
+        Gtk.FontButton timeFontButton = new Gtk.FontButton.with_font("Lato Light 30") { use_font = true };
 
-        Label dateFontLabel = new Label("Date Font:");
-        FontButton dateFontButton = new FontButton.with_font("Lato Light 20") { use_font = true };
+        Gtk.Label dateFontLabel = new Gtk.Label("Date Font:");
+        Gtk.FontButton dateFontButton = new Gtk.FontButton.with_font("Lato Light 20") { use_font = true };
 
         // Asset (Layer)
-        Label assetTitleLabel = new Label("") {margin_top = 15};
+        Gtk.Label assetTitleLabel = new Gtk.Label("") {margin_top = 15};
 
-        ComboBoxText assetVisibleComboBox = new ComboBoxText();
+        Gtk.ComboBoxText assetVisibleComboBox = new Gtk.ComboBoxText();
 
-        Label assetAnimationLabel = new Label("Animation Mode & Speed:");
-        Box assetAnimationBox = new Box(Orientation.HORIZONTAL, 10);
-        ComboBoxText assetModeComboBox = new ComboBoxText();
-        SpinButton assetSpeedEntry = new SpinButton.with_range(100, 1000, 1);
+        Gtk.Label assetAnimationLabel = new Gtk.Label("Animation Mode & Speed:");
+        Gtk.Box assetAnimationBox = new Gtk.Box(Gtk.Orientation.HORIZONTAL, 10);
+        Gtk.ComboBoxText assetModeComboBox = new Gtk.ComboBoxText();
+        Gtk.SpinButton assetSpeedEntry = new Gtk.SpinButton.with_range(100, 1000, 1);
 
         public OptionsPage() {
 
             spacing = 10;
-            orientation = Orientation.HORIZONTAL;
-            halign = Align.CENTER;
-            valign = Align.CENTER;
+            orientation = Gtk.Orientation.HORIZONTAL;
+            halign = Gtk.Align.CENTER;
+            valign = Gtk.Align.CENTER;
             hexpand = true;
             vexpand = true;
 
             wallpaperBox.margin = 20;
             wallpaperBox.margin_end = 0;
-            wallpaperBox.valign = Align.CENTER;
-            wallpaperBox.halign = Align.START;
+            wallpaperBox.valign = Gtk.Align.CENTER;
+            wallpaperBox.halign = Gtk.Align.START;
 
             dateTimeBox.hexpand = true;
             dateTimeBox.vexpand = true;
-            dateTimeBox.halign = Align.CENTER;
-            dateTimeBox.valign = Align.CENTER;
+            dateTimeBox.halign = Gtk.Align.CENTER;
+            dateTimeBox.valign = Gtk.Align.CENTER;
 
-            scrolledWindow.hscrollbar_policy = PolicyType.NEVER;
+            scrolledWindow.hscrollbar_policy = Gtk.PolicyType.NEVER;
 
             optionsBox.margin = 20;
             optionsBox.margin_start = 0;
-            optionsBox.halign = Align.START;
+            optionsBox.halign = Gtk.Align.START;
             optionsBox.hexpand = true;
 
             wallpaperTitleLabel.set_markup("<span font='Lato Light 15'>Wallpaper Options:</span>");
@@ -256,7 +253,7 @@ namespace WallpaperCreator.OnScreen {
             setDateTimeLabel();
 
             foreach(var child in optionsBox.get_children())
-                child.halign = Align.START;
+                child.halign = Gtk.Align.START;
         }
 
         public void updateUI () {
@@ -309,45 +306,45 @@ namespace WallpaperCreator.OnScreen {
             switch (active) {
 
                 case "Top Left":
-                    dateTimeBox.halign = Align.START;
-                    dateTimeBox.valign = Align.START;
+                    dateTimeBox.halign = Gtk.Align.START;
+                    dateTimeBox.valign = Gtk.Align.START;
                 break;
                 case "Top Center":
-                    dateTimeBox.halign = Align.CENTER;
-                    dateTimeBox.valign = Align.START;
+                    dateTimeBox.halign = Gtk.Align.CENTER;
+                    dateTimeBox.valign = Gtk.Align.START;
                 break;
                 case "Top Right":
-                    dateTimeBox.halign = Align.END;
-                    dateTimeBox.valign = Align.START;
+                    dateTimeBox.halign = Gtk.Align.END;
+                    dateTimeBox.valign = Gtk.Align.START;
                 break;
                 case "Center Right":
-                    dateTimeBox.halign = Align.END;
-                    dateTimeBox.valign = Align.CENTER;
+                    dateTimeBox.halign = Gtk.Align.END;
+                    dateTimeBox.valign = Gtk.Align.CENTER;
                 break;
 
                 case "Center":
-                    dateTimeBox.halign = Align.CENTER;
-                    dateTimeBox.valign = Align.CENTER;
+                    dateTimeBox.halign = Gtk.Align.CENTER;
+                    dateTimeBox.valign = Gtk.Align.CENTER;
                 break;
 
                 case "Center Left":
-                    dateTimeBox.halign = Align.START;
-                    dateTimeBox.valign = Align.CENTER;
+                    dateTimeBox.halign = Gtk.Align.START;
+                    dateTimeBox.valign = Gtk.Align.CENTER;
                 break;
 
                 case "Bottom Right":
-                    dateTimeBox.halign = Align.END;
-                    dateTimeBox.valign = Align.END;
+                    dateTimeBox.halign = Gtk.Align.END;
+                    dateTimeBox.valign = Gtk.Align.END;
                 break;
 
                 case "Bottom Center":
-                    dateTimeBox.halign = Align.CENTER;
-                    dateTimeBox.valign = Align.END;
+                    dateTimeBox.halign = Gtk.Align.CENTER;
+                    dateTimeBox.valign = Gtk.Align.END;
                 break;
 
                 case "Bottom Left":
-                    dateTimeBox.halign = Align.START;
-                    dateTimeBox.valign = Align.END;
+                    dateTimeBox.halign = Gtk.Align.START;
+                    dateTimeBox.valign = Gtk.Align.END;
                 break;
 
                 default:
@@ -360,17 +357,20 @@ namespace WallpaperCreator.OnScreen {
 
             alignment = dateTimeAlignmentComboBox.get_active_text().down();
 
-            if(alignment == "start")
-                timeLabel.halign = Align.START;
-            else if(alignment == "center")
-                timeLabel.halign = Align.CENTER;
-            else
-                timeLabel.halign = Align.END;
+            if(alignment == "start"){
+                timeLabel.halign = Gtk.Align.START;
+            }
+            else if(alignment == "center"){
+                timeLabel.halign = Gtk.Align.CENTER;
+            }
+            else{
+                timeLabel.halign = Gtk.Align.END;
+            }
         }
 
         private void setColor() {
 
-            RGBA rgba = dateTimeColorButton.rgba;
+            Gdk.RGBA rgba = dateTimeColorButton.rgba;
             dateTimeColor = rgbaToHex(rgba);
 
             rgba = dateTimeShadowColorButton.rgba;
@@ -395,12 +395,12 @@ namespace WallpaperCreator.OnScreen {
 
         public void setImage(string path) {
 
-            wallpaperImage.pixbuf = new Pixbuf.from_file_at_scale(path, 600, 400, true);
+            wallpaperImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale(path, 600, 400, true);
         }
 
         public void setAsset(string path) {
 
-            assetImage.pixbuf = new Pixbuf.from_file_at_scale(path, 600, 400, true);
+            assetImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale(path, 600, 400, true);
         }
 
         public void setAnimationMode() {
@@ -416,7 +416,7 @@ namespace WallpaperCreator.OnScreen {
             dateLabel.set_markup(@"<span color='$color' font='$dateFont'>Sunday, August 22</span>");
         }
 
-        private string rgbaToHex(RGBA rgba) {
+        private string rgbaToHex(Gdk.RGBA rgba) {
             return "#%02x%02x%02x".printf((int)(rgba.red*255), (int)(rgba.green*255), (int)(rgba.blue*255));
         }  
     }
