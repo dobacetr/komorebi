@@ -156,7 +156,11 @@ namespace WallpaperCreator.OnScreen {
 						addLayerButton.visible = true;
 						optionsPage.setImage(filePath);
 
-					} else {
+					} else if(wallpaperType == "video") {
+						addLayerButton.visible = false;
+						optionsPage.setImage(thumbnailPath);
+					}
+					else {
 						addLayerButton.visible = false;
 						optionsPage.setImage(@"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/blank.svg");
 					}
