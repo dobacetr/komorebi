@@ -63,6 +63,11 @@ namespace WallpaperCreator {
             return;
         }
         Gtk.init (ref args);
+        Gst.init (ref args);
+        var err = GtkClutter.init (ref args);
+        if (err != Clutter.InitError.SUCCESS) {
+            error ("Could not initalize clutter: %s ", err.to_string ());
+        }
 
         Gtk.Settings.get_default().gtk_application_prefer_dark_theme = true;
 

@@ -65,6 +65,7 @@ OPTIONS
 vala_precompile(WALLPAPER_CREATOR
     extra/wallpaper-creator/Main.vala
 
+    extra/wallpaper-creator/OnScreen/VideoPlayer.vala
     extra/wallpaper-creator/OnScreen/NewWallpaperWindow.vala
     extra/wallpaper-creator/OnScreen/InitialPage.vala
     extra/wallpaper-creator/OnScreen/OptionsPage.vala
@@ -75,6 +76,8 @@ PACKAGES
     gee-0.8
     gtk+-3.0
     gstreamer-1.0
+    clutter-gtk-1.0
+    clutter-gst-3.0
     webkit2gtk-4.1
 OPTIONS
     --vapidir=${CMAKE_CURRENT_SOURCE_DIR}/vapi/

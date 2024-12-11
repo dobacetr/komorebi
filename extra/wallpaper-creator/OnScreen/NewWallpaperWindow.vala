@@ -159,6 +159,8 @@ namespace WallpaperCreator.OnScreen {
 					} else if(wallpaperType == "video") {
 						addLayerButton.visible = false;
 						optionsPage.setImage(thumbnailPath);
+						optionsPage.setVideo(filePath);
+						
 					}
 					else {
 						addLayerButton.visible = false;

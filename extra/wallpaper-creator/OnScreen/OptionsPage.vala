@@ -27,6 +27,11 @@ namespace WallpaperCreator.OnScreen {
         Gtk.Label timeLabel = new Gtk.Label("");
         Gtk.Label dateLabel = new Gtk.Label("");
         Gtk.Image assetImage = new Gtk.Image();
+        VideoPlayer videoPlayer = new VideoPlayer(600, 400);
+        Clutter.Actor cDateTimeBox = new Clutter.Actor();
+        Clutter.Text timeText = new Clutter.Text();
+        Clutter.Text dateText = new Clutter.Text();
+        
 
         // List of long options
         Gtk.ScrolledWindow scrolledWindow = new Gtk.ScrolledWindow(null, null);
@@ -92,6 +97,10 @@ namespace WallpaperCreator.OnScreen {
             hexpand = true;
             vexpand = true;
 
+            videoPlayer.set_size_request(600, 400);
+            videoPlayer.halign = Gtk.Align.CENTER;
+            videoPlayer.halign = Gtk.Align.START;
+
             wallpaperBox.margin = 20;
             wallpaperBox.margin_end = 0;
             wallpaperBox.valign = Gtk.Align.CENTER;
@@ -101,6 +110,17 @@ namespace WallpaperCreator.OnScreen {
             dateTimeBox.vexpand = true;
             dateTimeBox.halign = Gtk.Align.CENTER;
             dateTimeBox.valign = Gtk.Align.CENTER;
+
+            Clutter.BoxLayout cBoxLayout = new Clutter.BoxLayout ();
+            cBoxLayout.set_orientation (Clutter.Orientation.VERTICAL);
+            cBoxLayout.set_spacing (5);
+
+            cDateTimeBox.set_layout_manager (cBoxLayout);
+            cDateTimeBox.x_expand = true;
+            cDateTimeBox.y_expand = true;
+            cDateTimeBox.set_x_align(Clutter.ActorAlign.CENTER);
+            cDateTimeBox.set_y_align(Clutter.ActorAlign.CENTER);
+            cDateTimeBox.set_margin({0,0,0,0});
 
             scrolledWindow.hscrollbar_policy = Gtk.PolicyType.NEVER;
 
@@ -157,6 +177,9 @@ namespace WallpaperCreator.OnScreen {
             assetModeComboBox.append("clouds", "Moving Clouds");
             assetModeComboBox.active = 0;
 
+            timeText.set_line_alignment (Pango.Alignment.CENTER);
+            dateText.set_line_alignment (Pango.Alignment.CENTER);
+
             // Signals
             wallpaperParallaxComboBox.changed.connect(() => updateUI());
             dateTimeVisibleComboBox.changed.connect(() => updateUI());
@@ -176,9 +199,18 @@ namespace WallpaperCreator.OnScreen {
             dateTimeBox.add(timeLabel);
             dateTimeBox.add(dateLabel);
 
-            overlay.add(wallpaperImage);
-            overlay.add_overlay(dateTimeBox);
-            overlay.add_overlay(assetImage);
+            cDateTimeBox.add_child(timeText);
+            cDateTimeBox.add_child(dateText);
+
+            if(wallpaperType == "video"){
+                videoPlayer.add_child(cDateTimeBox);
+                overlay.add(videoPlayer);
+                //overlay.add_overlay(dateTimeBox);
+            } else {
+                overlay.add(wallpaperImage);
+                overlay.add_overlay(dateTimeBox);
+                overlay.add_overlay(assetImage);
+            }
 
             wallpaperBox.add(overlay);
 
@@ -254,10 +286,17 @@ namespace WallpaperCreator.OnScreen {
 
             foreach(var child in optionsBox.get_children())
                 child.halign = Gtk.Align.START;
+
+            // Update DateTimeBoxPosition in case of change
+            videoPlayer.size_changed.connect(()=>refreshDateTimeBoxPosition());
+            cDateTimeBox.notify["size"].connect (() => refreshDateTimeBoxPosition());
+            // cDateTimeBox.notify["x_align"] and ["y_align"] does not work, we need to call refreshDataTimeBoxPosition manually!
+            dateText.notify["text"].connect(() => refreshDateTimeBoxPosition());
+            timeText.notify["text"].connect(() => refreshDateTimeBoxPosition());
+            refreshDateTimeBoxPosition();
         }
 
         public void updateUI () {
-
 
             wallpaperParallax = wallpaperParallaxComboBox.get_active_id() == "enable";
 
@@ -272,11 +311,18 @@ namespace WallpaperCreator.OnScreen {
             dateTimeBox.opacity = showDateTime ? 255 : 0;
             dateTimeBox.visible = false;
 
+            cDateTimeBox.opacity = showDateTime ? 255 : 0;
+
             // Margins
             dateTimeBox.margin_top = marginTop;
             dateTimeBox.margin_end = marginRight;
             dateTimeBox.margin_start = marginLeft;
             dateTimeBox.margin_bottom = marginBottom;
+
+            cDateTimeBox.margin_top = marginTop;
+            cDateTimeBox.margin_right = marginRight;
+            cDateTimeBox.margin_left = marginLeft;
+            cDateTimeBox.margin_bottom = marginBottom;
              
             setPosition();
             setAlignment();
@@ -297,6 +343,41 @@ namespace WallpaperCreator.OnScreen {
             show_all();
         }
 
+        public void refreshDateTimeBoxPosition(){
+            float xNew = 0;
+            float yNew = 0;
+            
+            switch(cDateTimeBox.get_x_align ()){
+                case Clutter.ActorAlign.FILL:
+                    xNew += 0;
+                    break;
+                case Clutter.ActorAlign.START:
+                    xNew += 0;
+                    break;
+                case Clutter.ActorAlign.CENTER:
+                    xNew += 0.5f*(videoPlayer.get_width()-cDateTimeBox.get_width());
+                    break;
+                case Clutter.ActorAlign.END:
+                    xNew += videoPlayer.get_width()-cDateTimeBox.get_width();
+                    break;
+                }
+            switch(cDateTimeBox.get_y_align ()){
+                case Clutter.ActorAlign.FILL:
+                    yNew += 0;
+                    break;
+                case Clutter.ActorAlign.START:
+                    yNew += 0;
+                    break;
+                case Clutter.ActorAlign.CENTER:
+                    yNew += 0.5f*(videoPlayer.get_height()-cDateTimeBox.get_height());
+                    break;
+                case Clutter.ActorAlign.END:
+                    yNew += videoPlayer.get_height()-cDateTimeBox.get_height();
+                    break;
+                }
+            cDateTimeBox.set_position (xNew, yNew);
+        }
+
         public void setPosition() {
 
             var active = dateTimePositionComboBox.get_active_text();
@@ -308,43 +389,61 @@ namespace WallpaperCreator.OnScreen {
                 case "Top Left":
                     dateTimeBox.halign = Gtk.Align.START;
                     dateTimeBox.valign = Gtk.Align.START;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.START);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.START);
                 break;
                 case "Top Center":
                     dateTimeBox.halign = Gtk.Align.CENTER;
                     dateTimeBox.valign = Gtk.Align.START;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.CENTER);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.START);
                 break;
                 case "Top Right":
                     dateTimeBox.halign = Gtk.Align.END;
                     dateTimeBox.valign = Gtk.Align.START;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.END);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.START);
                 break;
                 case "Center Right":
                     dateTimeBox.halign = Gtk.Align.END;
                     dateTimeBox.valign = Gtk.Align.CENTER;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.END);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.CENTER);
                 break;
 
                 case "Center":
                     dateTimeBox.halign = Gtk.Align.CENTER;
                     dateTimeBox.valign = Gtk.Align.CENTER;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.CENTER);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.CENTER);
                 break;
 
                 case "Center Left":
                     dateTimeBox.halign = Gtk.Align.START;
                     dateTimeBox.valign = Gtk.Align.CENTER;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.START);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.CENTER);
                 break;
 
                 case "Bottom Right":
                     dateTimeBox.halign = Gtk.Align.END;
                     dateTimeBox.valign = Gtk.Align.END;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.END);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.END);
                 break;
 
                 case "Bottom Center":
                     dateTimeBox.halign = Gtk.Align.CENTER;
                     dateTimeBox.valign = Gtk.Align.END;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.CENTER);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.END);
                 break;
 
                 case "Bottom Left":
                     dateTimeBox.halign = Gtk.Align.START;
                     dateTimeBox.valign = Gtk.Align.END;
+                    cDateTimeBox.set_x_align(Clutter.ActorAlign.START);
+                    cDateTimeBox.set_y_align(Clutter.ActorAlign.END);
                 break;
 
                 default:
@@ -359,12 +458,15 @@ namespace WallpaperCreator.OnScreen {
 
             if(alignment == "start"){
                 timeLabel.halign = Gtk.Align.START;
+                timeText.set_x_align(Clutter.ActorAlign.START);
             }
             else if(alignment == "center"){
                 timeLabel.halign = Gtk.Align.CENTER;
+                timeText.set_x_align(Clutter.ActorAlign.CENTER);
             }
             else{
                 timeLabel.halign = Gtk.Align.END;
+                timeText.set_x_align(Clutter.ActorAlign.END);
             }
         }
 
@@ -387,6 +489,7 @@ namespace WallpaperCreator.OnScreen {
 
             var alpha = dateTimeAlphaEntry.text.to_double();
             timeLabel.opacity = dateLabel.opacity = alpha / 255;
+            timeText.opacity = dateText.opacity = (uint)alpha;
             dateTimeAlpha = (int) alpha;
 
             alpha = dateTimeShadowAlphaEntry.text.to_int();
@@ -403,6 +506,13 @@ namespace WallpaperCreator.OnScreen {
             assetImage.pixbuf = new Gdk.Pixbuf.from_file_at_scale(path, 600, 400, true);
         }
 
+        public void setVideo(string path){
+            var videoPath = "file://" + path;
+            videoPlayer.set_video_uri(videoPath);
+            videoPlayer.set_playing(true);
+            videoPlayer.set_looping(true);
+        }
+
         public void setAnimationMode() {
 
             animationMode = assetModeComboBox.get_active_id();
@@ -412,6 +522,8 @@ namespace WallpaperCreator.OnScreen {
         private void setDateTimeLabel(string color = "white", string timeFont = "Lato Light 30",
                                       string dateFont = "Lato Light 20") {
 
+            timeText.set_markup (@"<span color='$color' font='$timeFont'>10:21 PM</span>");
+            dateText.set_markup (@"<span color='$color' font='$dateFont'>Sunday, August 22</span>");
             timeLabel.set_markup(@"<span color='$color' font='$timeFont'>10:21 PM</span>");
             dateLabel.set_markup(@"<span color='$color' font='$dateFont'>Sunday, August 22</span>");
         }

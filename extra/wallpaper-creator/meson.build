@@ -17,6 +17,7 @@ sources = files(
     'OnScreen/InitialPage.vala',
     'OnScreen/NewWallpaperWindow.vala',
     'OnScreen/OptionsPage.vala',
+    'OnScreen/VideoPlayer.vala'
     )
 
 
