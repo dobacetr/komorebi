@@ -305,27 +305,25 @@ namespace Komorebi.Utilities {
 		if(wallpaperType == "video") {
 			videoFileName = wallpaperKeyFile.get_string("Info", "VideoFileName");
 			wallpaperParallax = assetVisible = false;
-			return;
 		}
-
-		if(wallpaperType == "web_page") {
+		else if(wallpaperType == "web_page") {
 			webPageUrl = wallpaperKeyFile.get_string("Info", "WebPageUrl");
 			wallpaperParallax = assetVisible = false;
-
-			return;
 		}
+		else if(wallpaperType == "image") {
 
-		// Wallpaper base image
-		wallpaperParallax = wallpaperKeyFile.get_boolean("Wallpaper", "Parallax");
+			// Wallpaper base image
+			wallpaperParallax = wallpaperKeyFile.get_boolean("Wallpaper", "Parallax");
 
-		// Asset
-		assetVisible = wallpaperKeyFile.get_boolean ("Asset", "Visible");
+			// Asset
+			assetVisible = wallpaperKeyFile.get_boolean ("Asset", "Visible");
 
-		assetAnimationMode = wallpaperKeyFile.get_string ("Asset", "AnimationMode");
-		assetAnimationSpeed = wallpaperKeyFile.get_integer ("Asset", "AnimationSpeed");
+			assetAnimationMode = wallpaperKeyFile.get_string ("Asset", "AnimationMode");
+			assetAnimationSpeed = wallpaperKeyFile.get_integer ("Asset", "AnimationSpeed");
 
-		assetWidth = wallpaperKeyFile.get_integer ("Asset", "Width");
-		assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
+			assetWidth = wallpaperKeyFile.get_integer ("Asset", "Width");
+			assetHeight = wallpaperKeyFile.get_integer ("Asset", "Height");
+		}
 
 		// Set GNOME's wallpaper to this
 		var wallpaperJpgPath = @"$(Environment.get_home_dir())/Komorebi/System/Resources/Komorebi/$wallpaperName/wallpaper.jpg";
