@@ -4,6 +4,7 @@ FROM ubuntu:24.04
 ## Update and enable sudo
 RUN apt-get update \
  && apt-get install -y adduser sudo
+RUN sudo apt-get install -y git build-essential
 
 RUN adduser --disabled-password --gecos '' docker
 RUN adduser docker sudo

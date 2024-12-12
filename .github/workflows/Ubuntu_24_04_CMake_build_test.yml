@@ -28,5 +28,8 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v4
 
-      - name: Run CMake
+      - name: Configure CMake
         run: cmake -B build
+
+      - name: Build with CMake
+        run: cmake --build build
