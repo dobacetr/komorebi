@@ -31,9 +31,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Set up build dir
-        run: |
-          cd komorebi
-          mkdir build && cd build
+        run: mkdir build && cd build
 
       - name: Run CMake
         run: cmake ..
