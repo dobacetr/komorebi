@@ -3,7 +3,8 @@
 <p align="center">(n) sunlight filtering through trees.</p>
 
 <div style="text-align: center">
-<!-- This empty space is important for badges below --> 
+
+<!-- ^^^This empty space is important for badges below --> 
 [![Platform](https://img.shields.io/badge/platform-GNU/Linux-blue.svg)](http://www.kernel.org) [![Ubuntu-24.04 Build](https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml/badge.svg)](https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml)
 </div>
 
