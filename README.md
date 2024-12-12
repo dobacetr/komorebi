@@ -2,10 +2,10 @@
 <h2 align="center">Komorebi - Animated Wallpapers for Linux</h2>
 <p align="center">(n) sunlight filtering through trees.</p>
 
-<div style="text-align: center">
-
+<div align="center">
+  
 <!-- ^^^This empty space is important for badges below --> 
-[![Platform](https://img.shields.io/badge/platform-GNU/Linux-blue.svg)](http://www.kernel.org) [![Ubuntu-24.04 Build](https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml/badge.svg)](https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml)
+[![Platform]][platform_url] [![Ubuntu-24.04 Build]][Ubuntu-24.04 Build_url]
 </div>
 
 ## About the Fork
@@ -106,4 +106,12 @@ If your issue has not already been reported, please report it *[`here`](https://
 ### Thanks To:
 
 Pete Lewis ([@PJayB](https://github.com/PJayB)) for adding mult-monitor support
+
 Abraham Masri([@cheesecakeufo](https://github.com/cheesecakeufo)) for komorebi
+
+
+[Platform]: https://img.shields.io/badge/platform-GNU/Linux-blue.svg
+[platform_url]: http://www.kernel.org
+
+[Ubuntu-24.04 Build]: https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml/badge.svg
+[Ubuntu-24.04 Build_url]: https://github.com/dobacetr/komorebi/actions/workflows/Ubuntu_24_04_CMake_build_test.yml
