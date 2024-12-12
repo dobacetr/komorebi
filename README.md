@@ -19,7 +19,7 @@ This is a personal fork that I have made to use myself:
 
 <a href="https://github.com/cheesecakeufo/komorebi">Original Repo</a>
 
-Rest of the README is taken mostly from the original.
+Rest of the README is taken mostly from the original, with links replaced to this repository.
 
 ## What is Komorebi?
 
@@ -33,21 +33,31 @@ It provides fully customizeable image, video, and web page wallpapers that can b
 
 Two ways:
 
-### Packaged install (easy)
+### Packaged install
 
 1. Download `Komorebi` from the [Komorebi releases page](https://github.com/dobacetr/komorebi/releases).
 2. Install Komorebi using your favorite package installer (aka. double click on it)
 3. Launch Komorebi!
 
-### Manual Installing (advanced)
+### Building and Installing from Source
 
 Run the following:
 ```
-sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.1-dev libunwind-dev libclutter-gst-3.0-dev
+# If you dont have a c compiler
+sudo apt install build-essential
+# If you dont have cmake
+sudo apt install cmake
+## Install direct dependencies
+sudo apt install valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev \
+libclutter-1.0-dev libwebkit2gtk-4.1-dev libunwind-dev libclutter-gst-3.0-dev
+# Clone the repo
 git clone https://github.com/dobacetr/komorebi.git
+# Configure and build
 cd komorebi
-mkdir build && cd build
-cmake .. && sudo make install && ./komorebi
+cmake -B build
+cmake --build build
+# Install (to ~/Komorebi/System/Application)
+cmake --install build
 ```
 
 ## Change Wallpaper & Desktop Preferences
@@ -70,11 +80,9 @@ You can use either an image, a video, or a web page as a wallpaper and you have 
 1. Open Terminal
 2. `sudo apt remove komorebi`
 
-### If you manually installed Komorebi
+### If you installed Komorebi from the source
 
-1. Open Terminal
-2. `cd komorebi/build`
-3. `sudo make uninstall`
+You can remove the <code>~/Komorebi</code> folder.
 
 ## Questions? Issues?
 
@@ -88,8 +96,10 @@ _note: you need to quit and re-open Komorebi after changing this option_
 ### After uninstalling, my desktop isn't working right (blank or no icons)
 
 The latest Komorebi should already have a fix for this issue. If you've already uninstalled Komorebi and would like to fix the issue, simply run this (in the Terminal):
-`curl -s https://raw.githubusercontent.com/dobacetr/komorebi/main/data/Other/postrm | bash -s`
-
+```
+curl -s https://raw.githubusercontent.com/dobacetr/komorebi/main/data/Other/postrm | \
+bash -s
+```
 If your issue has not already been reported, please report it *[`here`](https://github.com/dobacetr/komorebi/issues/new)* and I'll try my best to fix them.
 
 ### Thanks To:
