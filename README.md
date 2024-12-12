@@ -2,19 +2,13 @@
 <h2 align="center">Komorebi - Animated Wallpapers for Linux</h2>
 <p align="center">(n) sunlight filtering through trees.</p>
 
-
-
-<p align="center">
-	<a href="http://www.kernel.org"><img alt="Platform (GNU/Linux)" src="https://img.shields.io/badge/platform-GNU/Linux-blue.svg"></a>
-	<a href="https://github.com/sindresorhus/awesome"><img alt="Awesome" src="https://cdn.rawgit.com/sindresorhus/awesome/d7305f38d29fed78fa85652e3a63e154dd8e8829/media/badge.svg"></a>
-	<a href="https://travis-ci.org/cheesecakeufo/komorebi"><img alt="Build Status" src="https://travis-ci.org/phw/peek.svg?branch=master"></a>
-</p>
+[![Platform](https://img.shields.io/badge/platform-GNU/Linux-blue.svg)](http://www.kernel.org) [![CMake-Build-Test](https://github.com/dobacetr/komorebi/actions/workflows/CMake_build_test.yml/badge.svg)](https://github.com/dobacetr/komorebi/actions/workflows/CMake_build_test.yml)
 
 ## About the Fork
 
 This is a personal fork that I have made to use myself:
 
-* Updated dependencies for Ubuntu 24 LTS.
+* Updated dependencies for Ubuntu 24.04.
 * Added video-preview to wallpaper-creator
 * Changed program directory from /System/... to ~/komorebi/System/...
 * Added _meson_ build files for linting using vala-language-server.
@@ -46,7 +40,7 @@ Two ways:
 
 Run the following:
 ```
-sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.1-dev libclutter-gst-3.0-dev
+sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.1-dev libunwind-dev libclutter-gst-3.0-dev
 git clone https://github.com/dobacetr/komorebi.git
 cd komorebi
 mkdir build && cd build
