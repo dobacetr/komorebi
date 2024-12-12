@@ -1,6 +1,6 @@
 # This is a basic workflow to help you get started with Actions
 
-name: CI
+name: CMake Build Test
 
 # Controls when the workflow will run
 on:
@@ -26,13 +26,14 @@ jobs:
       - uses: actions/checkout@v4
 
       # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: echo Hello, world!
+      - name: Install dependencies
+        run: sudo apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.1-dev libclutter-gst-3.0-dev
 
       # Runs a set of commands using the runners shell
-      - name: Run a multi-line script
+      - name: Set up build dir
         run: |
-          apt install cmake valac libgtk-3-dev libgee-0.8-dev libclutter-gtk-1.0-dev libclutter-1.0-dev libwebkit2gtk-4.1-dev libclutter-gst-3.0-dev
           cd komorebi
           mkdir build && cd build
-          cmake ..
+
+      - name: Run CMake
+        run: cmake ..
